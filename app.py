@@ -20,7 +20,7 @@ def simulation():
         template=request.args.get("template", "Account Verification"),
         recipient=request.args.get("recipient", "user@email.com"),
     )
-
+ 
 @app.post("/api/simulate")
 def simulate():
     data = request.get_json(silent=True) or {}
