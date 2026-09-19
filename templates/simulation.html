@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="simulation-page">
+<main class="standalone-simulation">
+  <div id="emailSimulation" class="email-simulation">
+    <div class="email-window">
+      <div class="email-toolbar">
+        <span class="circle"></span><span class="circle"></span><span class="circle"></span>
+        <span class="mailbox">Mail</span>
+      </div>
+
+      <div class="email-meta">
+        <div class="avatar" id="emailAvatar">M</div>
+        <div class="email-details">
+          <div class="email-line">
+            <span class="meta-label">From:</span>
+            <b id="emailSender">Security Team</b>
+            <span class="email-address" id="emailAddress">&lt;security-team@email.com&gt;</span>
+          </div>
+          <div class="email-line">
+            <span class="meta-label">To:</span>
+            <span id="emailTo">{{ recipient }}</span>
+          </div>
+          <div class="email-line">
+            <span class="meta-label">Date:</span>
+            <span id="emailDate">--</span>
+
+<script>
+const now = new Date();
+
+document.getElementById("emailDate").textContent =
+    now.toLocaleString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true
+    });
+</script>
+
+
+          </div>
+        </div>
+        <div class="email-header-actions">
+          <button title="Reply" onclick="showEmailAction('Reply')">&#8617;</button>
+          <button title="More" onclick="showEmailAction('More')">&#8942;</button>
+        </div>
+      </div>
+
+      <div class="email-content">
+        <h3 id="emailSubject">Action required: Verify your account</h3>
+        <p>Hello,</p>
+        <p id="emailBody">We detected unusual activity on your account. Please review the recent activity using the button below.</p>
+        <button class="fake-link" id="fakeLink" onclick="recordClick()">Review Account Activity</button>
+        <p class="email-small">If you were not expecting this message, verify the sender before following any links.</p>
+        <div class="email-signature">Regards,<br>Security Team</div>
+      </div>
+    </div>
+
+    <div class="simulation-actions">
+      <button class="report-btn" onclick="recordReport()">Report as Phishing</button>
+      <button class="ignore-btn" onclick="recordIgnore()">Ignore Message</button>
+    </div>
+    <div id="trainingFeedback" class="training-feedback hidden"><span id="eventStatus">Ready</span></div>
+  </div>
+</main>
+
+<script>
+const selectedTemplate = {{ template|tojson }};
+const scenarios = {
+  "Account Verification": {sender: "Account Security Team", address: "security-training@example.test", subject: "Action required: Verify your account", body: "We detected unusual activity on your account. Please review the recent activity using the button below.", button: "Review Account Activity"},
+  "Password Reset": {sender: "IT Support Desk", address: "it-support@example.test", subject: "Password reset request detected", body: "A password reset request was recently initiated. Review the request using the training link below.", button: "Review Reset Request"},
+  "Invoice Review": {sender: "Accounts Department", address: "accounts-training@example.test", subject: "Invoice requires your attention", body: "A new invoice is waiting for review. Check the document using the simulated training link below.", button: "View Invoice"},
+  "Company Update": {sender: "Internal Communications", address: "communications-training@example.test", subject: "Important company update", body: "An important internal announcement is ready. Open the simulated message to continue the exercise.", button: "Read Company Update"},
+  "Prize / Reward": {sender: "Employee Rewards", address: "rewards-training@example.test", subject: "You have been selected for a reward", body: "A reward notification is waiting for you. Review the simulated offer and identify the warning signs.", button: "View Reward"}
+};
+
+function updateEmail() {
+  const scenario = scenarios[selectedTemplate] || scenarios["Account Verification"];
+  document.getElementById("emailSender").textContent = scenario.sender;
+  document.getElementById("emailAddress").textContent = scenario.address;
+  document.getElementById("emailSubject").textContent = scenario.subject;
+  document.getElementById("emailBody").textContent = scenario.body;
+  document.getElementById("fakeLink").textContent = scenario.button;
+}
+
+function showFeedback(title, text, type) {
+  const box = document.getElementById("trainingFeedback");
+  box.className = "training-feedback " + type;
+  box.innerHTML = "<b>" + title + "</b><br>" + text;
+  box.classList.remove("hidden");
+}
+
+function recordClick() {
+  document.getElementById("eventStatus").textContent = "Clicked";
+  showFeedback("Training event: simulated link clicked", "This was a safe simulation. In a real phishing email, verify the sender, inspect the destination and avoid entering credentials from unexpected links.", "warning");
+}
+
+function recordReport() {
+  document.getElementById("eventStatus").textContent = "Reported";
+  showFeedback("Good awareness response", "You reported the simulated message. Look for urgency, unexpected requests, unfamiliar senders and suspicious links.", "success");
+}
+
+function recordIgnore() {
+  document.getElementById("eventStatus").textContent = "Ignored";
+  showFeedback("Message ignored", "Ignoring an unexpected message is safer than interacting with it. Reporting it is useful when your organization provides a reporting process.", "info");
+}
+
+function showEmailAction(action) {
+  showFeedback(action + " action", "This is a controlled training mailbox. No real email is sent and no external action is performed.", "info");
+}
+
+updateEmail();
+</script>
+</body>
+</html>

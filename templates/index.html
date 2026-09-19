@@ -1,0 +1,322 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhishSense — Phishing Email Simulation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand"><span class="brand-mark">P</span><span>PhishSense</span></div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#features">Features</a>
+    <a href="#how">How It Works</a>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#awareness">Awareness</a>
+   
+  </nav>
+  <a class="nav-btn" href="#simulator">Start Simulation</a>
+</header>
+
+<main>
+
+<section id="home" class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow">CONTROLLED SECURITY AWARENESS</div>
+    <h1>Test phishing awareness.<br><span>Build safer habits.</span></h1>
+    <p class="hero-text">
+      Create controlled phishing simulations to test awareness of phishing attacks among peers or systems,
+      identify risky response patterns, and turn the results into practical prevention training.
+    </p>
+    <div class="hero-actions">
+      <a class="primary-btn" href="#simulator">Create Safe Simulation →</a>
+      <a class="secondary-btn" href="#awareness">Learn the warning signs</a>
+    </div>
+    <div class="hero-note"><span>●</span> Training environment · No real credentials collected</div>
+  </div>
+  <div class="hero-art">
+    <div class="mail-card">
+      <div class="mail-top"><span>Security Alert</span><span>09:42</span></div>
+      <div class="mail-icon">✉</div>
+      <h3>Unusual sign-in detected</h3>
+      <p>Your account needs verification. Review the activity using the safe training link.</p>
+      <button>Review Activity</button>
+      <div class="risk-pill">SIMULATED</div>
+    </div>
+    <div class="float-card one">⚠ <b>Think before clicking</b></div>
+    <div class="float-card two">✓ Report suspicious emails</div>
+  </div>
+</section>
+
+<section id="features" class="features section">
+  <div class="section-heading">
+    <div class="eyebrow">KEY FEATURES</div>
+    <h2>Practice recognition, not real exploitation.</h2>
+    <p>The platform reproduces the learning value of phishing attacks while keeping the exercise controlled.</p>
+  </div>
+  <div class="feature-grid">
+    <article><div class="feature-no">01</div><h3>Realistic simulations</h3><p>Simulates realistic phishing emails and common attack patterns such as urgency, impersonation and suspicious requests.</p></article>
+    <article><div class="feature-no">02</div><h3>Response tracking</h3><p>Tracks safe training responses such as opening, clicking or reporting a simulated message to identify awareness gaps.</p></article>
+    <article><div class="feature-no">03</div><h3>Prevention & training</h3><p>Turns simulation results into practical strategies for phishing prevention, awareness and security training.</p></article>
+    <article><div class="feature-no">04</div><h3>Safe by design</h3><p>Uses simulated destinations and never asks participants to submit real passwords, payment details or authentication codes.</p></article>
+  </div>
+</section>
+
+<section id="how" class="how section">
+  <div class="how-title">
+    <div class="eyebrow">HOW IT WORKS</div>
+    <h2>Four steps from simulation to learning.</h2>
+  </div>
+  <div class="steps">
+    <div class="step"><span>01</span><h3>Choose a scenario</h3><p>Select an awareness scenario such as account verification, invoice review or company update.</p></div>
+    <div class="step"><span>02</span><h3>Run the exercise</h3><p>Present a realistic but controlled phishing message to the intended training group.</p></div>
+    <div class="step"><span>03</span><h3>Measure responses</h3><p>Review clicks, reports and other safe interactions to identify vulnerability patterns.</p></div>
+    <div class="step"><span>04</span><h3>Train & improve</h3><p>Use the findings to teach suspicious email patterns and preventive behavior.</p></div>
+  </div>
+</section>
+
+<section id="dashboard" class="dashboard section">
+  <div class="dash-head">
+    <div><div class="eyebrow">SIMULATION DASHBOARD</div><h2>Awareness overview</h2></div>
+    <a class="dark-btn" href="#simulator">+ New Simulation</a>
+  </div>
+  <div class="stats" id="stats">
+    <div class="stat"><span>Campaigns</span><strong id="campaigns">—</strong><small>Active exercises</small></div>
+    <div class="stat"><span>Messages Simulated</span><strong id="sent">—</strong><small>Controlled emails</small></div>
+    <div class="stat"><span>Clicked</span><strong id="clicked">—</strong><small>Awareness signal</small></div>
+    <div class="stat"><span>Reported</span><strong id="reported">—</strong><small>Positive behavior</small></div>
+  </div>
+  <div class="dash-grid">
+    <div class="panel">
+      <div class="panel-title"><h3>Campaign performance</h3><span>Current dataset</span></div>
+      {% for c in campaigns %}
+      <div class="campaign-row">
+        <div class="campaign-info"><b>{{ c.name }}</b><small>{{ c.type }}</small></div>
+        <div class="bar"><i style="width: {{ (c.clicked / c.sent * 100)|round }}%"></i></div>
+        <strong>{{ ((c.clicked / c.sent) * 100)|round }}%</strong>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="panel activity">
+      <div class="panel-title"><h3>Recent activity</h3><span>Safe events</span></div>
+      <p>🟢 Simulation campaign launched</p>
+      <p>🟠 User interacted with simulated link</p>
+      <p>🔵 Awareness quiz completed</p>
+      <p>🟢 Suspicious email reported</p>
+    </div>
+  </div>
+</section>
+
+
+<section id="simulator" class="simulator section">
+  <div class="sim-copy">
+    <div class="eyebrow">LIVE PHISHING SIMULATION</div>
+    <h2>See the simulated email, then test your response.</h2>
+    <p>
+      This is an interactive awareness exercise. Create a scenario and the generated
+      email will appear. The links are simulated and no real credentials are collected.
+    </p>
+    <div class="safety-box">
+      <b>Training mode</b><br>
+      The exercise records only safe awareness events such as opening, clicking the
+      simulated link, or reporting the message.
+    </div>
+  </div>
+
+  <div class="sim-workspace">
+    <div class="sim-panel">
+      <label>Simulation scenario</label>
+      <select id="template">
+        <option>Account Verification</option>
+        <option>Password Reset</option>
+        <option>Invoice Review</option>
+        <option>Company Update</option>
+        <option>Prize / Reward</option>
+      </select>
+
+      <label>Training group</label>
+      <input id="group" placeholder="e.g. Cybersecurity Lab Group">
+
+      <label>Recipient email</label>
+      <input id="recipient" type="email" placeholder="student@example.test" value="training-user@example.test">
+
+      <label>Learning objective</label>
+      <textarea id="objective" rows="3">Recognize suspicious email patterns and avoid unsafe links.</textarea>
+
+      <button class="primary-btn full" onclick="createSimulation()">Launch Simulation</button>
+      <div id="simResult" class="result"></div>
+    </div>
+
+  </div>
+</section>
+
+<section id="awareness" class="awareness section">
+  <div class="awareness-intro">
+    <div class="eyebrow">LEARNING OUTCOMES</div>
+    <h2>Turn every simulation into better awareness.</h2>
+    <p>This project develops practical knowledge instead of simply measuring mistakes.</p>
+  </div>
+  <div class="outcomes">
+    <article><span>01</span><h3>Understand phishing methods</h3><p>Understand phishing attack methods and techniques, including common social-engineering patterns.</p></article>
+    <article><span>02</span><h3>Recognize suspicious patterns</h3><p>Build the ability to recognize suspicious email patterns before interacting with a message.</p></article>
+    <article><span>03</span><h3>Design preventive measures</h3><p>Gain practical knowledge in designing preventive measures against phishing.</p></article>
+  </div>
+</section>
+
+<!-- <section class="brief section">
+  <div class="brief-card objective">
+    <span>OBJECTIVE</span>
+    <p>Create a controlled phishing simulation to test awareness of phishing attacks among peers or systems.</p>
+  </div>
+  <div class="brief-card skills">
+    <span>SKILLS INVOLVED</span>
+    <p>Social engineering · Email security · Phishing techniques</p>
+  </div>
+</section> -->
+
+<section class="footer-cta">
+  <div><div class="eyebrow">SECURITY AWARENESS</div><h2>Think before you click.</h2><p>Use controlled simulations to identify gaps, teach warning signs and strengthen phishing prevention.</p></div>
+  <a class="primary-btn" href="#home">Back to top ↑</a>
+</section>
+</main>
+
+<footer>© PhishSense · Phishing Email Simulation · Authorized awareness training only</footer>
+
+
+<script>
+let simulationActive = false;
+
+const scenarios = {
+  "Account Verification": {
+    sender: "Account Security Team",
+    address: "security-training@example.test",
+    subject: "Action required: Verify your account",
+    body: "We detected unusual activity on your account. Please review the recent activity using the button below.",
+    button: "Review Account Activity"
+  },
+  "Password Reset": {
+    sender: "IT Support Desk",
+    address: "it-support@example.test",
+    subject: "Password reset request detected",
+    body: "A password reset request was recently initiated. Review the request using the training link below.",
+    button: "Review Reset Request"
+  },
+  "Invoice Review": {
+    sender: "Accounts Department",
+    address: "accounts-training@example.test",
+    subject: "Invoice requires your attention",
+    body: "A new invoice is waiting for review. Check the document using the simulated training link below.",
+    button: "View Invoice"
+  },
+  "Company Update": {
+    sender: "Internal Communications",
+    address: "communications-training@example.test",
+    subject: "Important company update",
+    body: "An important internal announcement is ready. Open the simulated message to continue the exercise.",
+    button: "Read Company Update"
+  },
+  "Prize / Reward": {
+    sender: "Employee Rewards",
+    address: "rewards-training@example.test",
+    subject: "You have been selected for a reward",
+    body: "A reward notification is waiting for you. Review the simulated offer and identify the warning signs.",
+    button: "View Reward"
+  }
+};
+
+function updateEmailPreview() {
+  const s = scenarios[document.getElementById("template").value];
+  document.getElementById("emailSender").textContent = s.sender;
+  document.getElementById("emailAddress").textContent = s.address;
+  document.getElementById("emailSubject").textContent = s.subject;
+  document.getElementById("emailBody").textContent = s.body;
+  document.querySelector(".fake-link").textContent = s.button;
+}
+
+async function createSimulation() {
+  const template = document.getElementById("template").value;
+  const group = document.getElementById("group").value || "Training group";
+  const recipient = document.getElementById("recipient").value || "training-user@example.test";
+  const objective = document.getElementById("objective").value;
+
+  const r = await fetch("/api/simulate", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({template, group, recipient, objective})
+  });
+  const data = await r.json();
+
+  if (!data.success) {
+    document.getElementById("simResult").textContent = "Unable to launch the simulation.";
+    return;
+  }
+
+  document.getElementById("simResult").innerHTML =
+    "<b>✓ Simulation launched</b><br>Opening the simulated email...";
+  window.location.href = "/simulation?template=" + encodeURIComponent(template) + "&recipient=" + encodeURIComponent(recipient);
+}
+
+function showFeedback(title, text, type) {
+  const box = document.getElementById("trainingFeedback");
+  box.className = "training-feedback " + type;
+  box.innerHTML = "<b>" + title + "</b><br>" + text;
+  box.classList.remove("hidden");
+}
+
+function recordClick() {
+  if (!simulationActive) return;
+  document.getElementById("eventStatus").textContent = "Clicked";
+  showFeedback(
+    "Training event: simulated link clicked",
+    "This was a safe simulation. In a real phishing email, verify the sender, inspect the destination and avoid entering credentials from unexpected links.",
+    "warning"
+  );
+}
+
+function recordReport() {
+  if (!simulationActive) return;
+  document.getElementById("eventStatus").textContent = "Reported";
+  showFeedback(
+    "Good awareness response",
+    "You reported the simulated message. Look for urgency, unexpected requests, unfamiliar senders and suspicious links.",
+    "success"
+  );
+}
+
+function recordIgnore() {
+  if (!simulationActive) return;
+  document.getElementById("eventStatus").textContent = "Ignored";
+  showFeedback(
+    "Message ignored",
+    "Ignoring an unexpected message is safer than interacting with it. Reporting it is useful when your organization provides a reporting process.",
+    "info"
+  );
+}
+
+function showEmailAction(action) {
+  showFeedback(
+    action + " action",
+    "This is a controlled training mailbox. No real email is sent and no external action is performed.",
+    "info"
+  );
+}
+
+async function loadStats() {
+  const r = await fetch("/api/stats");
+  const s = await r.json();
+  document.getElementById("campaigns").textContent = s.campaigns;
+  document.getElementById("sent").textContent = s.sent;
+  document.getElementById("clicked").textContent = s.clicked;
+  document.getElementById("reported").textContent = s.reported;
+}
+loadStats();
+</script>
+
+</body>
+</html>
