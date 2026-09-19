@@ -1,4 +1,4 @@
-# PhishGuard — Phishing Email Simulation
+# PhishSense — Phishing Email Simulation
 
 A controlled phishing-awareness training web application built with Flask, HTML, CSS and JavaScript.
 
@@ -22,4 +22,4 @@ This implementation is intentionally designed for authorized awareness training.
 4. `python app.py`
 5. Open `http://127.0.0.1:5000`
 
-MongoDB can be added later if persistent campaign/user records are required.
+
