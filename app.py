@@ -18,7 +18,7 @@ def simulation():
     return render_template(
         "simulation.html",
         template=request.args.get("template", "Account Verification"),
-        recipient=request.args.get("recipient", "training-user@example.test"),
+        recipient=request.args.get("recipient", "user@email.com"),
     )
 
 @app.post("/api/simulate")
