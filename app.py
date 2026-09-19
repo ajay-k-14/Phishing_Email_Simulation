@@ -17,7 +17,8 @@ def home():
 def simulation():
     return render_template(
         "simulation.html",
-        template=request.args.get("template", "Account Verification"),
+        template=request.args.get("template", "Account Verification",),
+        sender=request.args.get("sender", "security-team@email.com"),
         recipient=request.args.get("recipient", "training-user@example.test"),
     )
 
